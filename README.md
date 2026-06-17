@@ -14,6 +14,53 @@
 
 ## 🏗️ Architecture
 ---
+┌─────────────┐     JWT      ┌──────────────────┐
+
+│   Client    │ ──────────▶  │  Spring Security  │
+
+└─────────────┘              └────────┬─────────┘
+
+│
+
+┌────────▼─────────┐
+
+│   Controllers     │
+
+└────────┬─────────┘
+
+│
+
+┌────────▼─────────┐
+
+│    Services       │
+
+└──────┬──────┬────┘
+
+│      │
+
+┌─────────▼─┐  ┌─▼──────────────┐
+
+│ PostgreSQL │  │  Kafka Producer │
+
+└───────────┘  └─────────┬───────┘
+
+│
+
+┌──────────▼───────┐
+
+│  Kafka Consumer   │
+
+│  (Fraud Engine)   │
+
+└──────┬───────┬───┘
+
+│       │
+
+┌─────────▼─┐  ┌──▼──────────┐
+
+│ PostgreSQL │  │ Fraud Alerts│
+
+└───────────┘  └─────────────┘
 
 ## ⚡ Tech Stack
 
@@ -63,7 +110,7 @@ mvn spring-boot:run
 ```
 
 ### 📖 API Documentation
-Open your browser and go to:
+Open your browser and go to: http://localhost:8080/swagger-ui.html
 ---
 
 ## 🔐 API Endpoints
@@ -80,6 +127,36 @@ Open your browser and go to:
 ---
 
 ## 📁 Project Structure
+
+fraud-detection/
+
+├── src/main/java/fraud_detection/
+
+│   ├── controller/        # REST Controllers
+
+│   ├── service/           # Business Logic
+
+│   ├── repository/        # JPA Repositories
+
+│   ├── entity/            # JPA Entities
+
+│   ├── dto/               # Request/Response DTOs
+
+│   ├── kafka/             # Producer & Consumer
+
+│   ├── security/          # JWT Auth
+
+│   ├── enums/             # Enumerations
+
+│   └── exception/         # Global Exception Handler
+
+├── src/main/resources/
+
+│   ├── db/migration/      # Flyway SQL migrations
+
+│   └── application.properties
+
+└── docker-compose.yml
 ---
 
 ## 👨‍💻 Author
